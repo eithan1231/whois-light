@@ -1,0 +1,12 @@
+{
+  "name": "whois-light",
+  "version": "1.0.0",
+  "description": "Lightweight and performant WHOIS client supporting hundreds of TLDs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha test.js"
+  },
+  "author": "Eithan Hersey-Tuit",
+  "license": "ISC"
+}
