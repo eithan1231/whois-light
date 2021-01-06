@@ -7,6 +7,15 @@
     "start": "node index.js",
     "test": "mocha test.js"
   },
+  "keywords": [
+    "whois",
+    "lightweight",
+    "javascript",
+    "nodejs",
+    "js"
+  ],
+  "repository": "github:eithan1231/whois-light",
   "author": "Eithan Hersey-Tuit",
-  "license": "ISC"
+  "license": "ISC",
+  "homepage": "https://github.com/eithan1231/whois-light"
 }
