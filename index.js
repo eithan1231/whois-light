@@ -46,10 +46,10 @@ class WhoisLight
 
     const lines = res.split(CRLF);
     for (const line of lines) {
-      const lineSplit = line.split(':', 2);
-      if(lineSplit.length > 1) {
-        ret[lineSplit[0].trim()] = lineSplit[1].trim();
-      }
+      const keyEnd = line.indexOf(':');
+      const key = line.substring(0, keyEnd);
+      const value = line.substring(keyEnd + 1);
+      ret[key.trim()] = value.trim();
     }
 
     // want it to be last thing
