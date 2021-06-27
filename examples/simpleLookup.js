@@ -1,7 +1,7 @@
-const WhoisLight = require('../index.js');
+const WhoisLight = require("../index.js");
 
 // The domain we want to query, and options for the whois server
-const domain = 'google.com';
+const domain = "google.com";
 
 // Additional options to the query
 const options = {
@@ -23,12 +23,19 @@ const options = {
     // Printing some information about this domain. Including the name, the
     // registar, when it is dur to expire, and the email address for reporting
     // abuse.
-    console.log(`The domain ${whoisResults['Domain Name'].toLowerCase()} is registered with ${whoisResults['Registrar']}`);
-    console.log(`Domain is due to expire, ${whoisResults['Registry Expiry Date']}`);
-    console.log(`For abuse please contact, ${whoisResults['Registrar Abuse Contact Email']}`);
-  }
-  catch {
-    console.log('Failed to query whois information');
-    console.log('Ensure a network connection is established.');
+    console.log(
+      `The domain ${whoisResults[
+        "Domain Name"
+      ].toLowerCase()} is registered with ${whoisResults["Registrar"]}`
+    );
+    console.log(
+      `Domain is due to expire, ${whoisResults["Registry Expiry Date"]}`
+    );
+    console.log(
+      `For abuse please contact, ${whoisResults["Registrar Abuse Contact Email"]}`
+    );
+  } catch {
+    console.log("Failed to query whois information");
+    console.log("Ensure a network connection is established.");
   }
 })();
