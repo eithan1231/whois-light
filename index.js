@@ -14,14 +14,14 @@ class WhoisLight {
   static _nameToServer(name) {
     // Not string, should be treated as invalid. All invalid return false.
     if (typeof name !== "string") {
-      return false;
+      return null;
     }
 
     // Getting index of the last decimal place, where the top tld should be.
     const nameTldPosition = name.lastIndexOf(".");
     if (!nameTldPosition) {
       // No dots found, and therefore no tlds
-      return false;
+      return null;
     }
 
     // Subtracting the TLD, and converting to lowercase.
@@ -29,7 +29,7 @@ class WhoisLight {
 
     // Checking the TLD exists
     if (typeof whoisServers[nameTld] === "undefined") {
-      return false;
+      return null;
     }
 
     // Returning whois server informaion on the server.
