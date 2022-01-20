@@ -155,23 +155,15 @@ class WhoisLight {
     let results = {};
     let resultsCount = 0;
 
-    // Generating bulk promise for all domain names.
-    const promiseBulkNames = names.map((name) =>
-      WhoisLight.lookup(options, name)
-    );
+    const namesChunks = chunkArray(names, options.parellel);
 
-    // Segmenting for parellel processing.
-    const promiseBulkNamesChunked = chunkArray(
-      promiseBulkNames,
-      options.parellel
-    );
+    for (const namesChunk of namesChunks) {
+      const resolvedNamesPromises = namesChunk.map((name) =>
+        WhoisLight.lookup(options, name)
+      );
 
-    // enumering segemented parellel processing and resolving domains
-    for (const promiseBulkNamesChunk of promiseBulkNamesChunked) {
-      // resolving all of current segment
-      const resolvedNames = await Promise.all(promiseBulkNamesChunk);
+      const resolvedNames = await Promise.all(resolvedNamesPromises);
 
-      // generating results.
       for (const resolvedName of resolvedNames) {
         results[names[resultsCount++]] = resolvedName;
       }
