@@ -4,7 +4,6 @@
 
 const fs = require("fs");
 const axios = require("axios");
-const { checkPrimeSync } = require("crypto");
 
 const currentWhoisDomains = "../servers.json";
 const icannRootZoneDatabase = "https://www.iana.org/domains/root/db";
@@ -76,10 +75,10 @@ const fetchRootZoneParsed = async (url, domain) => {
     whoisServer = data.substring(
       whoisServerTagPosition + whoisServerString.length,
       whoisServerTagPositionEnd
-    );
+    ).trim();
 
     whoisServerQuery =
-      domainQueryOverrides[domain.substring(1).toLowerCase()] ?? null;
+      domainQueryOverrides[domain.toLowerCase()] ?? null;
   }
 
   return {
@@ -145,12 +144,17 @@ const main = async () => {
       updatedWhoisDomainsContent[domainName] = {
         ...scrapedZonesFormatted[domainName],
       };
-    } /*else if (
-      updatedWhoisDomainsContent[domainName].server !==
-      scrapedZonesFormatted[domainName].server
-    ) {
-      console.log(`Updating ${domainName}`);
-    }*/
+    }
+  });
+
+  Object.values(updatedWhoisDomainsContent).forEach((domainName) => {
+    if(updatedWhoisDomainsContent[domainName].server) {
+      updatedWhoisDomainsContent[domainName].server = updatedWhoisDomainsContent[domainName].server.trim();
+    }
+
+    if(updatedWhoisDomainsContent[domainName].query) {
+      updatedWhoisDomainsContent[domainName].query = updatedWhoisDomainsContent[domainName]?.query.trim();
+    }
   });
 
   fs.writeFileSync(
