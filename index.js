@@ -3,6 +3,7 @@ const { chunkArray } = require("./util");
 const whoisServers = require("./servers.json");
 
 const CRLF = "\r\n";
+const LINE_BREAK = "\n";
 
 const assert = require("assert");
 const net = require("net");
@@ -19,7 +20,7 @@ class WhoisLight {
 
     // Getting index of the last decimal place, where the top tld should be.
     const nameTldPosition = name.lastIndexOf(".");
-    if (!nameTldPosition) {
+    if (nameTldPosition < 0) {
       // No dots found, and therefore no tlds
       return null;
     }
@@ -43,12 +44,32 @@ class WhoisLight {
   static _formatResults(res) {
     let ret = {};
 
-    const lines = res.split(CRLF);
+    const lines = res.split(LINE_BREAK);
+
     for (const line of lines) {
+      if (!line) {
+        continue;
+      }
+
+      if (line.startsWith(">>>") && line.endsWith("<<<")) {
+        break;
+      }
+
       const keyEnd = line.indexOf(":");
-      const key = line.substring(0, keyEnd);
-      const value = line.substring(keyEnd + 1);
-      ret[key.trim()] = value.trim();
+
+      if (keyEnd < 0) {
+        continue;
+      }
+
+      const key = line.substring(0, keyEnd).trim();
+
+      const value = line.substring(keyEnd + 1).trim();
+
+      if (!key || !value) {
+        continue;
+      }
+
+      ret[key] = value;
     }
 
     // want it to be last thing
