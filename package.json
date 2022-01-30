@@ -1,6 +1,6 @@
 {
   "name": "whois-light",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Lightweight and performant WHOIS client supporting hundreds of TLDs",
   "main": "index.js",
   "types": "index.d.ts",
