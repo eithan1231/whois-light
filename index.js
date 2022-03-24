@@ -13,28 +13,26 @@ class WhoisLight {
    * Gets the whois server associated with a domain name
    */
   static _nameToServer(name) {
-    // Not string, should be treated as invalid. All invalid return false.
     if (typeof name !== "string") {
+      return null
+    }
+
+    const majorTldPosition = name.lastIndexOf('.');
+    if (majorTldPosition === -1) {
       return null;
     }
 
-    // Getting index of the last decimal place, where the top tld should be.
-    const nameTldPosition = name.lastIndexOf(".");
-    if (nameTldPosition < 0) {
-      // No dots found, and therefore no tlds
+    const majorTld = name.substring(majorTldPosition + 1);
+
+    if (typeof whoisServers[majorTld] === 'undefined') {
       return null;
     }
 
-    // Subtracting the TLD, and converting to lowercase.
-    const nameTld = name.substring(nameTldPosition + 1).toLowerCase();
+    const whoisServer = whoisServers[majorTld].find(
+      (whoisServer) => name.substring(name.length - whoisServer.tld.length) === whoisServer.tld
+    );
 
-    // Checking the TLD exists
-    if (typeof whoisServers[nameTld] === "undefined") {
-      return null;
-    }
-
-    // Returning whois server informaion on the server.
-    return whoisServers[nameTld];
+    return whoisServer
   }
 
   /**
@@ -181,7 +179,7 @@ class WhoisLight {
     for (const namesChunk of namesChunks) {
       const resolvedNamesPromises = namesChunk.map((name) =>
         WhoisLight.lookup(options, name)
-      );
+      );  
 
       const resolvedNames = await Promise.all(resolvedNamesPromises);
 

@@ -58,12 +58,12 @@ describe("util", function () {
 
 describe("WhoisLight", function () {
   describe("#_nameToServer(name)", function () {
-    it("passing undefined returns false", function () {
-      assert(WhoisLight._nameToServer() === false);
+    it("passing undefined returns null", function () {
+      assert(WhoisLight._nameToServer() === null);
     });
 
-    it("nonexistant TLD return false", function () {
-      assert(WhoisLight._nameToServer("test.eithan") === false);
+    it("nonexistant TLD return null", function () {
+      assert(WhoisLight._nameToServer("test.eithan") === null);
     });
 
     it("valid domain yields a object response", function () {
