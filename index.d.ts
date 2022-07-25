@@ -65,14 +65,14 @@ export default class WhoisLight {
   /**
    * Performs a bulk whois lookup for several specified domain names. Returning the raw whois results.
    * @param options Optional options parameter.
-   * @param namesDomain names to preform lookup on.
+   * @param names Domain names to preform lookup on.
    * @returns Conditionally raw result or formatted result depending on options.format
    */
    static bulkLookup(options: WhoisLightOptions, names: string[]): Promise<WhoisLightBulkResult<WhoisLightRawResult | WhoisLightFormattedResult>>;
 
    /**
     * Performs a bulk whois lookup for several specified domain names. Returning the raw whois results.
-    * @param namesDomain names to preform lookup on.
+    * @param names Domain names to preform lookup on.
     */
    static bulkLookup(names: string[]): Promise<WhoisLightBulkResult<WhoisLightRawResult>>;
 }
