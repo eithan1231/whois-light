@@ -110,10 +110,10 @@ describe("WhoisLight", function () {
       ]);
 
       assert(typeof data["example.com"] === "object");
-      assert.strictEqual(data["example.com"]["Domain Name"], "EXAMPLE.COM");
+      assert.strictEqual(data["example.com"]["Domain Name"].toLowerCase(), "example.com");
 
       assert(typeof data["example.org"] === "object");
-      assert.strictEqual(data["example.org"]["Domain Name"], "EXAMPLE.ORG");
+      assert.strictEqual(data["example.org"]["Domain Name"].toLowerCase(), "example.org");
     });
   });
 });
